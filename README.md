@@ -1,80 +1,49 @@
 # multi-agent-core
 
-`multi-agent-core` is a tiny Python library for running a simple multi-agent workflow.
+`multi-agent-core` is a very small Python library for a simple agent workflow.
 
-It is designed to be:
+It now uses the real OpenAI API for text generation.
+
+## What this repository is
+
+This is a starter project for simple multi-agent experiments.
+
+It is:
 
 - standalone
-- easy to read
 - easy to copy into another repository
-- usable without internet access
-- based only on the Python standard library
+- small and readable
 
-This first version uses three small agents:
+## Main idea
 
-1. `Planner`: breaks a task into steps
-2. `Builder`: produces an output for the current step
-3. `Critic`: checks the output and decides whether it passes or needs one more try
+The flow is always:
 
-The orchestrator runs those agents in order and stores what happened in shared state.
+1. `Planner` makes a short list of steps
+2. `Builder` creates output for one step
+3. `Critic` checks that output
+4. if needed, the step is tried again
 
-## Repository layout
+The `Orchestrator` runs that flow for you.
 
-- `pyproject.toml`  
-  Basic package metadata so the project can be installed later if needed.
-
-- `README.md`  
-  Human-friendly explanation of what this repository does and how to use it.
-
-- `AGENTS.md`  
-  Durable instructions for future Codex work in this repository.
-
-- `src/multi_agent_core/__init__.py`  
-  Public exports for the library.
+## Files
 
 - `src/multi_agent_core/orchestrator.py`  
-  The main `Orchestrator` class that runs planner -> builder -> critic.
+  Runs the full planner -> builder -> critic flow.
 
 - `src/multi_agent_core/agents.py`  
-  Small agent classes used by the orchestrator.
+  Contains the `Planner`, `Builder`, and `Critic`.
 
 - `src/multi_agent_core/state.py`  
-  Helper for creating the shared state dictionary.
+  Creates the shared state dictionary.
 
 - `src/multi_agent_core/llm.py`  
-  A mock LLM function. This is the place to replace later if you want to connect a real model provider.
+  Contains the OpenAI API call.
 
 - `examples/simple_run.py`  
-  A complete end-to-end example.
+  A simple example you can run right away.
 
 - `tests/test_smoke.py`  
-  A basic smoke test using Python's built-in `unittest`.
-
-## How the flow works
-
-The library keeps a shared dictionary called `state`. All agents read from it and write to it.
-
-The state always includes these keys:
-
-- `task`
-- `plan`
-- `current_step`
-- `build`
-- `critique`
-- `history`
-
-The flow is:
-
-1. Create a state object from a task
-2. Run the planner once to create a step-by-step plan
-3. For each step:
-   - run the builder
-   - run the critic
-   - if the critic says `revise`, try again
-   - stop after at most 3 tries for that step
-4. Return the final state
-
-Every attempt is saved in `history` so you can inspect what happened.
+  A basic test to confirm the flow works.
 
 ## Run the example
 
@@ -84,13 +53,35 @@ From the repository root:
 python examples/simple_run.py
 ```
 
-You should see:
+The example prints the OpenAI model name before it starts.
 
-- the original task
-- the plan
-- the most recent build output
-- the most recent critique
-- the saved history entries
+## Set up the API key
+
+You must set `OPENAI_API_KEY` before running the system.
+
+Important:
+
+- do not paste your API key into Python files
+- do not hardcode your API key anywhere in this repository
+- use the `OPENAI_API_KEY` environment variable
+
+You can also set `OPENAI_MODEL` if you want to choose a model yourself.
+
+If `OPENAI_MODEL` is not set, the project uses:
+
+`gpt-5.3-codex`
+
+Example on Windows:
+
+```bash
+set OPENAI_API_KEY=your_key_here
+set OPENAI_MODEL=gpt-5.3-codex
+python examples/simple_run.py
+```
+
+If `OPENAI_API_KEY` is missing, the program stops with:
+
+`OPENAI_API_KEY not set`
 
 ## Run the tests
 
@@ -100,45 +91,26 @@ From the repository root:
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
-## Reuse this library in another repository
+The tests do not make real network calls. They replace the OpenAI client with a local stub.
 
-The easiest path is:
+## Reuse in another repository
 
-1. Copy the `src/multi_agent_core` folder into your other repository
-2. Import the pieces you need
-3. Replace the mock LLM later if you want richer behavior
-
-Example import:
+The simplest option is to copy `src/multi_agent_core` into another project and import it:
 
 ```python
 from multi_agent_core import Orchestrator, create_state
 
-state = create_state("Draft a simple welcome message")
-result = Orchestrator().run(task=state["task"], state=state)
+task = "Write a short welcome message"
+state = create_state(task)
+result = Orchestrator().run(task, state)
 ```
 
-If you want to install it as a package later, this repository already has a basic `pyproject.toml`.
+## How it works now
 
-## Where to replace the mock LLM
+- `src/multi_agent_core/llm.py` sends prompts to OpenAI
+- it reads the key from `OPENAI_API_KEY`
+- it reads the model from `OPENAI_MODEL`
+- if the key is missing, it raises a clear error
+- if the API call fails, it raises a clear error
 
-The replacement point is:
-
-`src/multi_agent_core/llm.py`
-
-Right now it contains a deterministic `codex_llm(prompt: str) -> str` function so the whole project works offline.
-
-When you are ready to connect a real provider, keep the same function shape if possible. That will let the rest of the code stay simple.
-
-## Why this version is intentionally small
-
-This repository is meant to be a clean starting point, not a full framework.
-
-It does not include:
-
-- network calls
-- external packages
-- async orchestration
-- persistence layers
-- plugin systems
-
-That keeps it easy to understand and easy to adapt.
+That keeps the rest of the library simple.

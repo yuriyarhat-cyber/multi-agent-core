@@ -5,11 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "multi-agent-core"
 version = "0.1.0"
-description = "A tiny standard-library multi-agent orchestration library."
+description = "A tiny multi-agent orchestration library with mock and OpenAI LLM support."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
   { name = "Codex" }
+]
+dependencies = [
+  "openai>=1.0.0",
 ]
 
 [tool.setuptools]

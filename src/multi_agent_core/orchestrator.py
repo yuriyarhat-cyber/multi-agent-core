@@ -25,6 +25,7 @@ class Orchestrator:
         self.max_iterations_per_step = max(1, min(max_iterations_per_step, 3))
 
     def run(self, task: str, state: dict[str, Any] | None = None) -> dict[str, Any]:
+        """Run the full planner, builder, and critic loop for a task."""
         shared_state = create_state(task) if state is None else state
         self._ensure_required_keys(shared_state, task)
 

@@ -13,6 +13,7 @@ class Agent:
     name = "agent"
 
     def run(self, state: dict[str, Any]) -> dict[str, Any]:
+        """Read the shared state and return this agent's structured result."""
         raise NotImplementedError("Agent subclasses must implement run().")
 
 
@@ -22,6 +23,7 @@ class Planner(Agent):
     name = "planner"
 
     def run(self, state: dict[str, Any]) -> dict[str, Any]:
+        """Create a simple plan with a short summary and ordered steps."""
         task = str(state.get("task", "")).strip()
         summary = codex_llm(f"Plan task: {task}")
         words = [word.strip(".,:;!?") for word in task.split() if word.strip(".,:;!?")]
@@ -45,25 +47,26 @@ class Builder(Agent):
     name = "builder"
 
     def run(self, state: dict[str, Any]) -> dict[str, Any]:
+        """Create a draft output for the current step, using feedback if present."""
         step = state.get("current_step") or ""
         task = state.get("task") or ""
         previous_critique = state.get("critique") or {}
         issues = previous_critique.get("issues") or []
-        revision_note = ""
+        feedback_note = ""
         if issues:
-            revision_note = f" Revised to address: {'; '.join(issues)}."
+            feedback_note = f" Revised to address: {'; '.join(issues)}."
 
-        prompt = f"Build step '{step}' for task '{task}'.{revision_note}"
+        prompt = f"Build step '{step}' for task '{task}'.{feedback_note}"
         content = (
             f"Step: {step}\n"
             f"Task: {task}\n"
-            f"Draft: {codex_llm(prompt)}.{revision_note}"
+            f"Draft: {codex_llm(prompt)}.{feedback_note}"
         ).strip()
 
         return {
             "step": step,
             "content": content,
-            "attempted_revision": bool(issues),
+            "used_feedback": bool(issues),
         }
 
 
@@ -73,6 +76,7 @@ class Critic(Agent):
     name = "critic"
 
     def run(self, state: dict[str, Any]) -> dict[str, Any]:
+        """Return pass or revise, plus a list of issues to fix."""
         build = state.get("build") or {}
         content = str(build.get("content", "")).strip()
         attempt = int(state.get("_attempt", 1))

@@ -23,8 +23,13 @@ This repository is a small, reusable Python library for simple multi-agent orche
 - After making code changes, run the test suite.
 - Prefer clear names and predictable data structures.
 - Avoid adding configuration layers unless they solve a real problem.
+- Keep tests offline by default.
+- Never hardcode secrets or API keys.
+- Prefer environment variables for configuration.
+- Update `README.md` whenever setup steps change.
 
 ## LLM integration
 
 - The current LLM entry point is `src/multi_agent_core/llm.py`.
 - Keep the LLM interface simple so it can be replaced later without rewriting the whole library.
+- Keep the provider adapter simple and isolated from the rest of the package.
