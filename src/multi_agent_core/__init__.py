@@ -1,18 +1,20 @@
 """Public package exports for multi_agent_core."""
 
-from .agents import Agent, Builder, Critic, Planner
-from .llm import codex_llm, get_openai_api_key, get_openai_model
+from .api import run_task
+from .agents import Agent, Builder, Critic, Planner, ResearchCritic
+from .llm import codex_llm
 from .orchestrator import Orchestrator
+from .router import Router
 from .state import create_state
 
 __all__ = [
-    "Agent",
-    "Builder",
-    "Critic",
-    "Planner",
+    "run_task",
     "Orchestrator",
     "create_state",
+    "Router",
+    "Planner",
+    "Builder",
+    "Critic",
+    "ResearchCritic",
     "codex_llm",
-    "get_openai_api_key",
-    "get_openai_model",
 ]

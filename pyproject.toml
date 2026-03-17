@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "multi-agent-core"
 version = "0.1.0"
-description = "A tiny multi-agent orchestration library with mock and OpenAI LLM support."
+description = "A tiny reusable multi-agent orchestration library."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
@@ -14,6 +14,10 @@ authors = [
 dependencies = [
   "openai>=1.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/yuriyarhat-cyber/multi-agent-core"
+Repository = "https://github.com/yuriyarhat-cyber/multi-agent-core"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

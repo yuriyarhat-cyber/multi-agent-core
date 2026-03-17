@@ -7,6 +7,8 @@ from typing import Any
 
 REQUIRED_STATE_KEYS = (
     "task",
+    "routing",
+    "executed_flow",
     "plan",
     "current_step",
     "build",
@@ -19,6 +21,8 @@ def create_state(task: str) -> dict[str, Any]:
     """Create the shared state used by the orchestrator and agents."""
     return {
         "task": task,
+        "routing": {},
+        "executed_flow": [],
         "plan": {"steps": [], "summary": ""},
         "current_step": None,
         "build": {},

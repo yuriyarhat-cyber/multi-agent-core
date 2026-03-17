@@ -1,49 +1,38 @@
 # multi-agent-core
 
-`multi-agent-core` is a very small Python library for a simple agent workflow.
+`multi-agent-core` is a small Python library that can take a task, route it, plan it, build a result, and review the result.
 
-It now uses the real OpenAI API for text generation.
+It is meant to be easy to reuse in other repositories.
 
-## What this repository is
+## Simplest way to use it
 
-This is a starter project for simple multi-agent experiments.
+```python
+from multi_agent_core import run_task
 
-It is:
-
-- standalone
-- easy to copy into another repository
-- small and readable
+result = run_task("Write a short welcome message")
+print(result["task"])
+print(result["routing"])
+print(result["plan"])
+```
 
 ## Main idea
 
-The flow is always:
+The library does this:
 
-1. `Planner` makes a short list of steps
-2. `Builder` creates output for one step
-3. `Critic` checks that output
-4. if needed, the step is tried again
+1. `Router` looks at the task and chooses a task type
+2. `Planner` makes a short list of steps
+3. `Builder` creates output for one step
+4. `Critic` checks that output
+5. if needed, the step is tried again
 
 The `Orchestrator` runs that flow for you.
 
-## Files
+Different task types can use different flows:
 
-- `src/multi_agent_core/orchestrator.py`  
-  Runs the full planner -> builder -> critic flow.
-
-- `src/multi_agent_core/agents.py`  
-  Contains the `Planner`, `Builder`, and `Critic`.
-
-- `src/multi_agent_core/state.py`  
-  Creates the shared state dictionary.
-
-- `src/multi_agent_core/llm.py`  
-  Contains the OpenAI API call.
-
-- `examples/simple_run.py`  
-  A simple example you can run right away.
-
-- `tests/test_smoke.py`  
-  A basic test to confirm the flow works.
+- `file_task`: `planner -> builder -> critic`
+- `text_task`: `planner -> builder -> critic`
+- `research_task`: `planner -> builder -> critic -> research_critic`
+- `general_task`: `planner -> builder -> critic`
 
 ## Run the example
 
@@ -93,24 +82,59 @@ python -m unittest discover -s tests -p "test_*.py"
 
 The tests do not make real network calls. They replace the OpenAI client with a local stub.
 
-## Reuse in another repository
+## How to use this in another project
 
-The simplest option is to copy `src/multi_agent_core` into another project and import it:
+Option A: connect a local neighboring folder during development
 
-```python
-from multi_agent_core import Orchestrator, create_state
-
-task = "Write a short welcome message"
-state = create_state(task)
-result = Orchestrator().run(task, state)
+```bash
+pip install -e ../multi-agent-core
 ```
 
-## How it works now
+Option B: install from Git later
 
-- `src/multi_agent_core/llm.py` sends prompts to OpenAI
-- it reads the key from `OPENAI_API_KEY`
-- it reads the model from `OPENAI_MODEL`
-- if the key is missing, it raises a clear error
-- if the API call fails, it raises a clear error
+```bash
+pip install git+https://github.com/yuriyarhat-cyber/multi-agent-core.git
+```
 
-That keeps the rest of the library simple.
+Then use it like this:
+
+```python
+from multi_agent_core import run_task
+```
+
+## Minimal usage from another project
+
+```python
+from multi_agent_core import run_task
+
+result = run_task("Write a short welcome message")
+
+print(result["routing"])
+print(result["plan"])
+print(result["build"])
+print(result["critique"])
+```
+
+## What the result contains
+
+The returned dictionary includes:
+
+- `task`
+- `routing`
+- `executed_flow`
+- `plan`
+- `build`
+- `critique`
+- `history`
+
+## Main public API
+
+- `run_task`
+- `Orchestrator`
+- `create_state`
+- `Router`
+- `Planner`
+- `Builder`
+- `Critic`
+- `ResearchCritic`
+- `codex_llm`
