@@ -1,4 +1,4 @@
-"""Run a minimal end-to-end orchestration example."""
+"""Run a research task example with URL-based live research."""
 
 from __future__ import annotations
 
@@ -19,10 +19,11 @@ from multi_agent_core.llm import get_openai_model
 
 
 def main() -> None:
-    """Run the orchestrator with the real OpenAI API."""
+    """Run a research task that includes live URLs."""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-    task = "create file examples/generated/hello.py"
+    task = "analyze and compare https://example.com and https://www.iana.org/domains/reserved"
+
     print(f"Using OpenAI API with model: {get_openai_model()}")
     print()
 
@@ -35,44 +36,26 @@ def main() -> None:
         result = run_task(task, settings=Settings(project_root=str(ROOT)))
     except RuntimeError as exc:
         print(f"ERROR: {exc}")
-        print("Set OPENAI_API_KEY in your environment, then run the example again.")
         return
 
     print("TASK")
     print(result["task"])
     print()
 
-    print("ROUTING")
-    print(json.dumps(result["routing"], indent=2))
+    print("EXECUTED FLOW")
+    print(" -> ".join(result["executed_flow"]))
     print()
 
-    print("PLAN")
-    print(json.dumps(result["plan"], indent=2))
+    print("RESEARCH")
+    print(json.dumps(result["research"], indent=2))
     print()
 
     print("LATEST BUILD")
     print(json.dumps(result["build"], indent=2))
     print()
 
-    if result["build"].get("path"):
-        print("CREATED FILE")
-        print(result["build"]["path"])
-        print()
-
     print("LATEST CRITIQUE")
     print(json.dumps(result["critique"], indent=2))
-    print()
-
-    print("NEXT STEP")
-    print(json.dumps(result["next_step"], indent=2))
-    print()
-
-    print("SESSION HISTORY")
-    print(json.dumps(result["session_history"], indent=2))
-    print()
-
-    print("HISTORY")
-    print(json.dumps(result["history"], indent=2))
 
 
 if __name__ == "__main__":

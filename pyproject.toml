@@ -19,6 +19,9 @@ dependencies = [
 Homepage = "https://github.com/yuriyarhat-cyber/multi-agent-core"
 Repository = "https://github.com/yuriyarhat-cyber/multi-agent-core"
 
+[project.scripts]
+multi-agent-core = "multi_agent_core.cli:main"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 

@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 generated/
+.multi_agent_core_memory.json
+runs/

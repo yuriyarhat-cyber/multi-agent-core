@@ -1,140 +1,154 @@
 # multi-agent-core
 
-`multi-agent-core` is a small Python library that can take a task, route it, plan it, build a result, and review the result.
+`multi-agent-core` is a small Python library for running one task through a simple autonomous agent workflow.
 
-It is meant to be easy to reuse in other repositories.
+It can:
+- understand the task type
+- plan the work
+- build a result
+- review and retry when needed
+- keep a little memory across runs
+- return a clean final summary
 
-## Simplest way to use it
+## The easiest way to use it
 
 ```python
-from multi_agent_core import run_task
+from multi_agent_core import Settings, run_task
 
-result = run_task("Write a short welcome message")
-print(result["task"])
-print(result["routing"])
-print(result["plan"])
+result = run_task(
+    "Write a short welcome message",
+    settings=Settings(),
+)
+
+print(result["final_result"]["summary"])
 ```
 
-## Main idea
+## The easiest CLI use
 
-The library does this:
-
-1. `Router` looks at the task and chooses a task type
-2. `Planner` makes a short list of steps
-3. `Builder` creates output for one step
-4. `Critic` checks that output
-5. if needed, the step is tried again
-
-The `Orchestrator` runs that flow for you.
-
-Different task types can use different flows:
-
-- `file_task`: `planner -> builder -> critic`
-- `text_task`: `planner -> builder -> critic`
-- `research_task`: `planner -> builder -> critic -> research_critic`
-- `general_task`: `planner -> builder -> critic`
-
-## Run the example
-
-From the repository root:
+After installing the package:
 
 ```bash
-python examples/simple_run.py
+multi-agent-core "Write a short welcome message"
 ```
 
-The example prints the OpenAI model name before it starts.
+## What you need first
 
-## Set up the API key
+Set your OpenAI API key in the environment.
 
-You must set `OPENAI_API_KEY` before running the system.
-
-Important:
-
-- do not paste your API key into Python files
-- do not hardcode your API key anywhere in this repository
-- use the `OPENAI_API_KEY` environment variable
-
-You can also set `OPENAI_MODEL` if you want to choose a model yourself.
-
-If `OPENAI_MODEL` is not set, the project uses:
-
-`gpt-5.3-codex`
-
-Example on Windows:
+Windows:
 
 ```bash
 set OPENAI_API_KEY=your_key_here
-set OPENAI_MODEL=gpt-5.3-codex
-python examples/simple_run.py
 ```
 
-If `OPENAI_API_KEY` is missing, the program stops with:
+Optional model override:
 
-`OPENAI_API_KEY not set`
+```bash
+set OPENAI_MODEL=gpt-5.3-codex
+```
 
-## Run the tests
+Do not paste the API key into Python files.
+
+## Two official ways to use the library
+
+### 1. Python code
+
+```python
+from multi_agent_core import Settings, run_task
+
+settings = Settings(
+    project_root="C:/my-project",
+    autonomous_rounds=2,
+    max_iterations_per_step=3,
+    export_enabled=False,
+)
+
+result = run_task("Create file generated/hello.py", settings=settings)
+
+print(result["final_result"])
+print(result["next_step"])
+```
+
+### 2. CLI
+
+```bash
+multi-agent-core "Create file generated/hello.py" --project-root C:/my-project --rounds 2 --iterations 3
+```
+
+## What the library returns
+
+The most useful fields are:
+- `final_result`
+- `next_step`
+- `escalation`
+- `task_board`
+- `capability_report`
+
+If you want the full internal state, it is also returned.
+
+## What happens inside
+
+The library runs a compact agent workflow:
+
+1. route the task
+2. choose useful tool modes
+3. plan and build
+4. test and review
+5. retry if useful
+6. synthesize the final result
+7. prepare recovery or escalation if the run is stuck
+
+For larger tasks, it can split work into subtasks and manage them on a small internal task board.
+
+## Examples
 
 From the repository root:
+
+```bash
+python examples/simple_run.py
+python examples/research_run.py
+python examples/use_from_another_project.py
+```
+
+## Run the tests
 
 ```bash
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
-The tests do not make real network calls. They replace the OpenAI client with a local stub.
+The tests stay offline by default.
 
-## How to use this in another project
+## Use it in another project
 
-Option A: connect a local neighboring folder during development
+Local development:
 
 ```bash
 pip install -e ../multi-agent-core
 ```
 
-Option B: install from Git later
+Later from Git:
 
 ```bash
 pip install git+https://github.com/yuriyarhat-cyber/multi-agent-core.git
 ```
 
-Then use it like this:
+Then:
 
 ```python
-from multi_agent_core import run_task
+from multi_agent_core import Settings, run_task
 ```
-
-## Minimal usage from another project
-
-```python
-from multi_agent_core import run_task
-
-result = run_task("Write a short welcome message")
-
-print(result["routing"])
-print(result["plan"])
-print(result["build"])
-print(result["critique"])
-```
-
-## What the result contains
-
-The returned dictionary includes:
-
-- `task`
-- `routing`
-- `executed_flow`
-- `plan`
-- `build`
-- `critique`
-- `history`
 
 ## Main public API
 
 - `run_task`
+- `Settings`
 - `Orchestrator`
 - `create_state`
 - `Router`
 - `Planner`
 - `Builder`
+- `Tester`
 - `Critic`
 - `ResearchCritic`
-- `codex_llm`
+
+Advanced session agents are also exported from the package for lower-level use.

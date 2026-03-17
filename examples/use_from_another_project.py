@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -11,12 +12,17 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from multi_agent_core import run_task
+from multi_agent_core import Settings, run_task
 
 
 def main() -> None:
     """Run a minimal task through the library."""
-    result = run_task("Write a short welcome message")
+    if not os.getenv("OPENAI_API_KEY"):
+        print("OPENAI_API_KEY not set")
+        print("Set the API key in your environment before running this example.")
+        return
+
+    result = run_task("Write a short welcome message", settings=Settings())
 
     print(result["task"])
     print(result["routing"])
