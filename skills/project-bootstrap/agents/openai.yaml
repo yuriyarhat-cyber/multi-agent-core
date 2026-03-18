@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Bootstrap"
+  short_description: "Start a new project from an idea"
+  default_prompt: "Use -bootstrap to turn an idea into a small first working project."

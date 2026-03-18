@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Scaffold"
+  short_description: "Create a small backend project scaffold"
+  default_prompt: "Use -scaffold to create a simple backend project structure."

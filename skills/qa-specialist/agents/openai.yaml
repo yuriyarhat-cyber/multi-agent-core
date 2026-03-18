@@ -1,0 +1,7 @@
+interface:
+  display_name: "QA Specialist"
+  short_description: "User journeys, regressions, release readiness, evidence-based QA."
+  default_prompt: "Use $qa-specialist to test user journeys, capture reproducible defects, and assess release readiness."
+
+policy:
+  allow_implicit_invocation: true

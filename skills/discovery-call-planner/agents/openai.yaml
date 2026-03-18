@@ -1,0 +1,4 @@
+interface:
+  display_name: "Discovery Call Planner"
+  short_description: "Plan a strong discovery call"
+  default_prompt: "Use -call-planner to structure a sales discovery call."

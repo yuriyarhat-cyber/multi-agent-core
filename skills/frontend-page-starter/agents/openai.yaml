@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Page Starter"
+  short_description: "Create a small frontend page scaffold"
+  default_prompt: "Use -page-starter to create the first version of a simple web page or UI."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bot Conversation Designer"
+  short_description: "Design Telegram bot conversation flows"
+  default_prompt: "Use -conversation-designer to design a Telegram bot conversation flow."

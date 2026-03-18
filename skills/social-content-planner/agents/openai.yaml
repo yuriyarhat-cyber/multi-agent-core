@@ -1,0 +1,4 @@
+interface:
+  display_name: "Social Content Planner"
+  short_description: "Plan social and channel content"
+  default_prompt: "Use -content-planner to build a short content plan for social or Telegram channels."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Website Copy Editor"
+  short_description: "Edit website copy for clarity"
+  default_prompt: "Use -copy-editor to improve the clarity and structure of website copy."

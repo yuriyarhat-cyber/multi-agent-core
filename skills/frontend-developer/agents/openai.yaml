@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "Frontend Developer"
+  short_description: "UI, accessibility, responsive flows, frontend quality."
+  default_prompt: "Use $frontend-developer to build or review user-facing flows, states, and frontend behavior."
+
+policy:
+  allow_implicit_invocation: true

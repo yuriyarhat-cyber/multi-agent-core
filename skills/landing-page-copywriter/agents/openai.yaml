@@ -1,0 +1,4 @@
+interface:
+  display_name: "Landing Page Copywriter"
+  short_description: "Write focused landing page copy"
+  default_prompt: "Use -page-copywriter to write the first version of a landing page."

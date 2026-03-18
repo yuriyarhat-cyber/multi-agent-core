@@ -1,0 +1,4 @@
+interface:
+  display_name: "Objection Handler"
+  short_description: "Handle common sales objections clearly"
+  default_prompt: "Use -handler to respond to sales objections in a practical way."

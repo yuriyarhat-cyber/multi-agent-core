@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Operator"
+  short_description: "Operate safely inside a code repository"
+  default_prompt: "Use -operator to make safe, structured changes inside a repository."

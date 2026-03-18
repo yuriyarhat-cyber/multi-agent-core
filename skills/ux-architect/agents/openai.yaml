@@ -1,0 +1,4 @@
+interface:
+  display_name: "UX Architect"
+  short_description: "Design user flows and interaction logic"
+  default_prompt: "Use -architect to design a clear user flow and experience structure."

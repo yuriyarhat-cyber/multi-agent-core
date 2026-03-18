@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "Security Engineer"
+  short_description: "Threat modeling, auth, hardening, vulnerability review."
+  default_prompt: "Use $security-engineer to review risks, trust boundaries, auth, and concrete remediations."
+
+policy:
+  allow_implicit_invocation: true

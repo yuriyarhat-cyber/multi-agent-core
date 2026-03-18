@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mobile UX Reviewer"
+  short_description: "Review a site for mobile usability"
+  default_prompt: "Use -ux-reviewer to review a page or site for mobile UX problems."

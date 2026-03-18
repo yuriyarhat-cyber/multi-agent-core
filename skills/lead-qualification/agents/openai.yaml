@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lead Qualification"
+  short_description: "Qualify leads before deeper sales work"
+  default_prompt: "Use -qualification to qualify a lead and identify whether it is worth pursuing."

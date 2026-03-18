@@ -1,0 +1,4 @@
+interface:
+  display_name: "Telegram Bot Builder"
+  short_description: "Create a simple Telegram bot scaffold"
+  default_prompt: "Use -bot-builder to create the first version of a Telegram bot project."

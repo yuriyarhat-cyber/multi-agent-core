@@ -1,0 +1,4 @@
+interface:
+  display_name: "SEO Page Brief Writer"
+  short_description: "Write SEO briefs for website pages"
+  default_prompt: "Use -page-brief-writer to create an SEO brief for a page."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Homepage Optimizer"
+  short_description: "Improve homepage structure and messaging"
+  default_prompt: "Use -optimizer to improve a homepage for clarity and conversion."

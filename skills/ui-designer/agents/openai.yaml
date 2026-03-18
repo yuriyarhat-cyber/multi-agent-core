@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Designer"
+  short_description: "Design clear page and app interfaces"
+  default_prompt: "Use -designer to improve the structure and visual logic of an interface."

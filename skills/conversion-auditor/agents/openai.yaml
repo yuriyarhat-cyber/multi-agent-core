@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conversion Auditor"
+  short_description: "Audit pages and funnels for conversion"
+  default_prompt: "Use -auditor to find the main conversion problems on a page or funnel."

@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "API Tester"
+  short_description: "API contracts, negative paths, auth, retries, regressions."
+  default_prompt: "Use $api-tester to validate API contracts, auth failures, edge cases, and regression risk."
+
+policy:
+  allow_implicit_invocation: true

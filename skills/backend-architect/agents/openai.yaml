@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "Backend Architect"
+  short_description: "API, data models, reliability, migrations, scalability."
+  default_prompt: "Use $backend-architect to design or review backend architecture, APIs, and rollout risks."
+
+policy:
+  allow_implicit_invocation: true

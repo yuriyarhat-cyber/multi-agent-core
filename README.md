@@ -138,6 +138,42 @@ Then:
 from multi_agent_core import Settings, run_task
 ```
 
+## Move this setup to another computer
+
+This repository now stores both:
+- the Python multi-agent library
+- your Codex `skills`
+
+The library agents already live in:
+
+```text
+src/multi_agent_core/
+```
+
+The mirrored Codex skills now live in:
+
+```text
+skills/
+```
+
+On the new computer:
+
+1. Clone this GitHub repository.
+2. Install the Python package if you want to use the library.
+3. Copy the skills into Codex:
+
+```bash
+python scripts/install_codex_skills.py
+```
+
+If the target machine already has skill folders and you want to overwrite them:
+
+```bash
+python scripts/install_codex_skills.py --force
+```
+
+System-managed Codex skills from `.system/` are not mirrored here. The repository stores the non-system skills you want to keep and move.
+
 ## Main public API
 
 - `run_task`

@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "CTO"
+  short_description: "Technical strategy, sequencing, risks, specialist coordination."
+  default_prompt: "Use $cto-orchestrator to coordinate backend, frontend, security, and API decisions into one plan."
+
+policy:
+  allow_implicit_invocation: true

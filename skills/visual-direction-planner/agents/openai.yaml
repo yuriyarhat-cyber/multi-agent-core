@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Direction Planner"
+  short_description: "Define a visual direction for a site"
+  default_prompt: "Use -direction-planner to define the visual direction for a website or page."

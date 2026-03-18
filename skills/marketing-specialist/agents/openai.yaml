@@ -1,0 +1,7 @@
+interface:
+  display_name: "Marketing Specialist"
+  short_description: "Positioning, campaigns, growth, messaging, go-to-market."
+  default_prompt: "Use $marketing-specialist to plan messaging, channels, campaigns, and measurable growth experiments."
+
+policy:
+  allow_implicit_invocation: true

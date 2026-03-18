@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sales Script Writer"
+  short_description: "Write practical sales scripts"
+  default_prompt: "Use -script-writer to write a practical script for a sales conversation."

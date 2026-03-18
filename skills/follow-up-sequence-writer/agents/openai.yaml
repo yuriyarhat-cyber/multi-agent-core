@@ -1,0 +1,4 @@
+interface:
+  display_name: "Follow-Up Sequence Writer"
+  short_description: "Write a short sales follow-up sequence"
+  default_prompt: "Use -up-sequence-writer to write a concise sales follow-up sequence."

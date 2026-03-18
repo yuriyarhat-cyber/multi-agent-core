@@ -1,0 +1,4 @@
+interface:
+  display_name: "Media Buyer Planner"
+  short_description: "Plan campaign structure and ad tests"
+  default_prompt: "Use -buyer-planner to outline a simple campaign and testing plan."

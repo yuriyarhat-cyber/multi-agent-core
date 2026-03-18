@@ -1,0 +1,4 @@
+interface:
+  display_name: "Service Page Writer"
+  short_description: "Write a clear commercial service page"
+  default_prompt: "Use -page-writer to write a focused service page."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Offer Positioning"
+  short_description: "Position an offer clearly and sharply"
+  default_prompt: "Use -positioning to sharpen an offer, audience, and value proposition."

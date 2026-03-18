@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ads Creative Strategist"
+  short_description: "Plan ad angles and creative hooks"
+  default_prompt: "Use -creative-strategist to generate ad angles, hooks, and creative directions."

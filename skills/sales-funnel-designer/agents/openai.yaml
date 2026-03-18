@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sales Funnel Designer"
+  short_description: "Design a simple conversion funnel"
+  default_prompt: "Use -funnel-designer to design a conversion funnel from traffic to lead or sale."

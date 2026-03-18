@@ -1,0 +1,4 @@
+interface:
+  display_name: "Competitor Researcher"
+  short_description: "Analyze competitors and market patterns"
+  default_prompt: "Use -researcher to analyze competitors, offers, and market patterns."
